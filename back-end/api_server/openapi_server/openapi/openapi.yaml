@@ -1,0 +1,18 @@
+---
+openapi: 3.0.2
+info:
+  title: runtime
+  version: "1.0"
+  description: An API for the runtime environment
+paths:
+  /status:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving status
+        "400":
+          description: "Bad Request"
+      summary: Get status
+      operationId: get_status
+      x-openapi-router-controller:
+        openapi_server.controllers.status_controller
