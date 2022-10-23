@@ -1,0 +1,5 @@
+connexion==2.9.0
+Flask==1.1.4
+Flask-Cors==3.0.10
+Flask-SSLify==0.1.5
+Flask-Testing==0.8.1
