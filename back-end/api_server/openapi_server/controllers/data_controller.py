@@ -1,6 +1,6 @@
 from flask import make_response, jsonify, Response
 
-from openapi_server.storage_mock.storage_client import get_client
+from storage_mock.storage_client import get_client
 
 
 class DataController:
@@ -8,7 +8,7 @@ class DataController:
         self.s_client = get_client()
 
     def get_cases(self):
-        raise NotImplementedError
+        return self.s_client.get_entity('cases')
 
     def get_deaths(self):
         raise NotImplementedError
@@ -24,20 +24,20 @@ class DataController:
 
 
 def get_cases() -> Response:
-    return make_response(jsonify(DataController().get_cases()))
+    return make_response(jsonify(DataController().get_cases()), 200)
 
 
 def get_deaths() -> Response:
-    return make_response(jsonify(DataController().get_deaths()))
+    return make_response(jsonify(DataController().get_deaths()), 200)
 
 
 def get_policies() -> Response:
-    return make_response(jsonify(DataController().get_policies()))
+    return make_response(jsonify(DataController().get_policies()), 200)
 
 
 def get_temperatures() -> Response:
-    return make_response(jsonify(DataController().get_temperatures()))
+    return make_response(jsonify(DataController().get_temperatures()), 200)
 
 
 def get_vaccinations() -> Response:
-    return make_response(jsonify(DataController().get_vaccinations()))
+    return make_response(jsonify(DataController().get_vaccinations()), 200)
