@@ -4,7 +4,7 @@ SARS-CoV-2, Covid-19 dashboard for the Data Science and Society Master's course 
 
 Created by Team 10, Runtime Error
 
-Made with <3 by Max van der Weide, Milo Voorhout, Björn Koemans and Samtag Prakke.
+Made by Max van der Weide, Milo Voorhout, Björn Koemans and Samtag Prakke.
 
 ## Front End
 

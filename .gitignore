@@ -187,3 +187,5 @@ Thumbs.db
 
 # Config
 src/env.js
+
+back-end/api_server/config.py
