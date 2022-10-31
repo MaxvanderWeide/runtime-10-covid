@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,20 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'runtime';
   constructor() {
+  }
+
+  public networkMessage = '';
+
+  @HostListener('window:offline', ['$event'])
+  offline() {
+    this.networkMessage = 'offline';
+  }
+
+  @HostListener('window:online', ['$event'])
+  online() {
+    this.networkMessage = 'online';
+    setTimeout(() => {
+      this.networkMessage = '';
+    }, 5000);
   }
 }
