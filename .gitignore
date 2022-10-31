@@ -190,3 +190,5 @@ src/env.js
 
 back-end/api_server/config.py
 storage_mock/data
+front-end/src/env.js
+front-end/.angular
