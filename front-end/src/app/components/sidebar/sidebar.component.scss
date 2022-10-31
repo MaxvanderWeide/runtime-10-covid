@@ -1,0 +1,18 @@
+.sidebar {
+  //position: fixed;
+
+  width: 260px;
+  height: 100vh;
+  //background-color: red;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-right: 1px solid darkgray;
+
+  &-item{
+    margin-left: 10%;
+  }
+
+}
