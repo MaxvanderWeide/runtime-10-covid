@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@swimlane/ngx-charts": "^20.1.0"
+  }
+}
