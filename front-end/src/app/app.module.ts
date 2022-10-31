@@ -24,6 +24,9 @@ import {HeaderComponent} from "./components/header/header.component";
         DashboardModule
     ],
     providers: [EnvServiceProvider],
+    exports: [
+        ChartboxComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
