@@ -5,21 +5,27 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {EnvServiceProvider} from "./services/env.service.provider";
 import {HttpClientModule} from "@angular/common/http";
-import {HeaderComponent} from "./components/header/header.component";
 import { ChartboxComponent } from './components/chartbox/chartbox.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import {DashboardModule} from "./modules/dashboard/dashboard.module";
+import {HeaderComponent} from "./components/header/header.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        HeaderComponent,
-        ChartboxComponent
+        ChartboxComponent,
+        SidebarComponent,
+        HeaderComponent
     ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [EnvServiceProvider],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        DashboardModule
+    ],
+    providers: [EnvServiceProvider],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -6,7 +6,14 @@
     You're back online.
   </div>
 </div>
-<app-header></app-header>
-<div class="wrapper">
-  <router-outlet></router-outlet>
+
+
+<div class="page-content">
+  <app-sidebar></app-sidebar>
+  <div class="page-content-right-side">
+    <app-header></app-header>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
