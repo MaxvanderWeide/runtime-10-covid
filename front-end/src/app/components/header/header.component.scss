@@ -1,11 +1,18 @@
 .header {
-  position: fixed;
-  top: 25px;
-  left: 25px;
-  right: 25px;
-  color: white;
-  background: #f56b39;
-  height: 75px;
-  padding: 0 25px;
-  border-radius: 25px;
+  //position: fixed;
+  //width: 100%;
+
+  //background: #f56b39;
+  min-height: 64px;
+
+  display: flex;
+  flex-direction: row-reverse;
+  //padding: 0 1.5rem;
+
+  border-bottom: 1px solid darkgray;
+
+  &-item {
+    padding: 0 1.5rem
+  }
+
 }
