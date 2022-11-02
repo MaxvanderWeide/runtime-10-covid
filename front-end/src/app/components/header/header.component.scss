@@ -1,18 +1,68 @@
-.header {
-  //position: fixed;
-  //width: 100%;
-
-  //background: #f56b39;
-  min-height: 64px;
-
+header {
+  box-shadow: none;
   display: flex;
-  flex-direction: row-reverse;
-  //padding: 0 1.5rem;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: static;
+  transition: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  color: var(--text-primary-color);
+  min-height: 64px;
 
   border-bottom: 1px solid darkgray;
 
-  &-item {
-    padding: 0 1.5rem
+  .container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    min-height: 64px;
+
+    &-content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 4px 8px 4px 8px;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+        font-size: 25px;
+        display: flex;
+
+        border-radius: 50%;
+
+        &:hover {
+          background-color: var(--hover-primary-color);
+        }
+      }
+
+      .github {
+        display: flex;
+        margin-left: 8px;
+        border-radius: 50%;
+        padding: 7px 7px 7px 7px;
+
+        svg {
+          fill: var(--text-primary-color);
+          width: 30px;
+        }
+
+        &:hover {
+          background-color: var(--hover-primary-color);
+        }
+      }
+    }
   }
 
 }

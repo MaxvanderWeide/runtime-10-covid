@@ -1,0 +1,14 @@
+$background-primary-color: #f4f5fa;
+$background-primary-color-dark: #28243d;
+
+$text-primary-color: rgba(58, 53, 65, 0.87);
+$text-primary-color-dark: rgba(231, 227, 252, 0.87);
+
+$hover-primary-color: rgba(58, 53, 65, 0.04);
+$hover-primary-color-dark: rgba(231, 227, 252, 0.08);
+
+$config: (
+        --background-primary-color: ($background-primary-color, $background-primary-color-dark),
+        --text-primary-color: ($text-primary-color, $text-primary-color-dark),
+        --hover-primary-color: ($hover-primary-color, $hover-primary-color-dark)
+);

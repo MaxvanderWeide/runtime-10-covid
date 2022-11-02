@@ -4,7 +4,7 @@
   height: 100vh;
   overflow: hidden;
   border-right: 1px solid darkgray;
-  color: rgba(58, 53, 65, 0.87);
+  color: var(--text-primary-color);
 
 
   &-logo {
@@ -52,6 +52,7 @@
       padding-left: 0;
       padding-right: 0;
 
+
       a {
         display: flex;
         flex-grow: 1;
@@ -61,6 +62,14 @@
         width: 100%;
         padding: 0 14px 0 22px;
         height: 45px;
+        cursor: pointer;
+        border-radius: 0 100px 100px 0;
+        color: var(--text-primary-color);
+        text-decoration: none;
+
+        &:hover {
+          background-color: var(--hover-primary-color);
+        }
 
         .left {
           flex-shrink: 1;
@@ -80,8 +89,7 @@
       a.active {
         color: #fff;
         background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
-        box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
-        border-radius: 0 100px 100px 0;
+        box-shadow: 0 4px 8px -4px rgba(58, 53, 65, 0.42);
       }
     }
   }
