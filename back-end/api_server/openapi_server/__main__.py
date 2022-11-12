@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from api_server.openapi_server import app
+from openapi_server import app
 
 
 def main():
