@@ -19,4 +19,8 @@ FROM nginx:1.10.3-alpine
 COPY --from=web_server /usr/local/app/dist/runtime /usr/share/nginx/html
 EXPOSE 80
 
+FROM python:3
+COPY /storage_mock /storage_mock
+ENTRYPOINT ["python", "/storage_mock/storage_client.py"]
+
 
