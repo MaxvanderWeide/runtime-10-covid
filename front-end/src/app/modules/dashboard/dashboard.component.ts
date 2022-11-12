@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,47 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  public multi = [
-    {
-      name: 'Progression',
-      series: [
-        {
-          name: new Date('2021-09-01'),
-          value: 12
-        },
-        {
-          name: new Date('2021-10-01'),
-          value: 15
-        },
-        {
-          name: new Date('2021-11-01'),
-          value: 18
-        },
-        {
-          name: new Date('2021-12-01'),
-          value: 28
-        }
-      ]
-    },
+  public multi = [];
 
-    {
-      name: 'Expected',
-      series: [
-        {
-          name: new Date('2021-12-01'),
-          value: 28
-        },
-        {
-          name: new Date('2022-01-01'),
-          value: 49
-        }
-      ]
-    }
-  ];
-
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.getCases().subscribe(response => {
+      this.multi = response;
+      console.log(this.multi);
+    })
   }
 
 }
