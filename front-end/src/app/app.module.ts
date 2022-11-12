@@ -15,6 +15,8 @@ import {RouterModule} from '@angular/router';
 import { faHouse, faBuildingShield, faBook, faCloudMoon} from '@fortawesome/free-solid-svg-icons';
 import { PolicyComponent } from './modules/policy/policy.component';
 import { ReadmeComponent } from './modules/readme/readme.component';
+import {DashboardComponent} from "./modules/dashboard/dashboard.component";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
     declarations: [
@@ -22,6 +24,7 @@ import { ReadmeComponent } from './modules/readme/readme.component';
         ChartboxComponent,
         SidebarComponent,
         HeaderComponent,
+        DashboardComponent,
         PolicyComponent,
         ReadmeComponent
     ],
@@ -29,9 +32,9 @@ import { ReadmeComponent } from './modules/readme/readme.component';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        DashboardModule,
+        NgxChartsModule,
         FontAwesomeModule,
-        RouterModule
+        RouterModule,
     ],
     providers: [EnvServiceProvider],
     exports: [

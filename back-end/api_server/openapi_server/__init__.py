@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-import os
-
-from flask import request
-from flask_sslify import SSLify
 import connexion
 from connexion import decorators
 from connexion.exceptions import BadRequestProblem

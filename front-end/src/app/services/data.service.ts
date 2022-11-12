@@ -35,8 +35,8 @@ export class DataService {
         );
     }
 
-    public getStatus(): Observable<any> {
-        return this.http.get(`${this.env.apiUrl}/status`)
+    public getCases(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/cases`)
             .pipe(
                 catchError(DataService.handleError)
             );
