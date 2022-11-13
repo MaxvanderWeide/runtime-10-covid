@@ -28,23 +28,36 @@ class Country(Enum):
     BRAZIL = 4
 
 class LiveDataFetcher:
+    """
+    Class for fetching data from covid19api.com
+    """
+
     def __init__(self):
         self.data = {}
         STORAGE_FOLDER.mkdir(parents = True, exist_ok = True)
 
     def fetch_country(self, country: Country):
+        """
+        Function to fetch data from covid19api.com for a given country
+        :param: country: Country to fetch data for, must be of type Country
+        :return: Dictionary with date, hours, cases and deaths
+        """
         if country == Country.NORWAY:
-            return self.fetch_norway()
+            return self._fetch_norway()
         elif country == Country.NETHERLANDS:
-            return self.fetch_netherlands()
+            return self._fetch_netherlands()
         elif country == Country.SPAIN:
-            return self.fetch_spain()
+            return self._fetch_spain()
         elif country == Country.BRAZIL:
-            return self.fetch_brazil()
+            return self._fetch_brazil()
         else:
             raise ValueError("Country not supported")
 
-    def fetch_norway(self):
+    def _fetch_norway(self):
+        """
+        Function to fetch data from government github reposity for Norway
+        :return: Dictionary with date, hours, cases and deaths
+        """
         data = pd.read_csv('https://raw.githubusercontent.com/thohan88/covid19-nor-data/master/data/01_infected/msis/municipality_and_district.csv')
         date = str(datetime.strptime(data.iloc[-1:]['date_time'].values[0], "%Y-%m-%dT%H:%M:%SZ"))     
         data = data[['date', 'cases']]
@@ -56,7 +69,11 @@ class LiveDataFetcher:
         print(date)
         return {'date': date, 'hours': hours, 'cases': cases}
 
-    def fetch_netherlands(self):
+    def _fetch_netherlands(self):
+        """
+        Function to fetch data from government reposity at rivm.nl for the Netherlands
+        :return: Dictionary with date, hours, cases and deaths
+        """
         data = pd.read_csv('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.csv', delimiter = ";")
         date = str(data.iloc[-1:]['Date_of_report'].values[0])
         data = data[['Date_of_publication', 'Total_reported', 'Deceased']]
@@ -68,13 +85,26 @@ class LiveDataFetcher:
         deaths = deaths.iloc[-1:][0]
         return {'date': date, 'hours': hours, 'cases': cases, 'deaths': deaths}
 
-    def fetch_spain(self):
-        return self._fetch_covid_19_api("https://api.covid19api.com/dayone/country/spain")
+    def _fetch_spain(self):
+        """
+        Function to fetch data from covid19api.com for Spain
+        :return: Dictionary with date, hours, cases and deaths
+        """
+        return self.__fetch_covid_19_api("https://api.covid19api.com/dayone/country/spain")
 
-    def fetch_brazil(self):
-        return self._fetch_covid_19_api("https://api.covid19api.com/dayone/country/brazil")
+    def _fetch_brazil(self):
+        """
+        Function to fetch data from covid19api.com for Brazil
+        :return: Dictionary with date, hours, cases and deaths
+        """
+        return self.__fetch_covid_19_api("https://api.covid19api.com/dayone/country/brazil")
 
-    def _fetch_covid_19_api(self, url: str):
+    def __fetch_covid_19_api(self, url: str):
+        """
+        Helper function to fetch data from covid19api.com for a given country
+        :param: url: URL to fetch data from
+        :return: Dictionary with date, hours, cases and deaths
+        """
         response = requests.request("GET", url, headers={}, data={})
         result = json.loads(response.text)
         result = result[-2:]
@@ -86,46 +116,35 @@ class LiveDataFetcher:
         return {'date': date, 'hours': hours, 'cases': cases, 'deaths': deaths}
 
 
-test = LiveDataFetcher().fetch_country(Country.SPAIN)
-print(test)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class DataHandler:
+class DataFetcher:
     def __init__(self):
         self.data = pd.DataFrame()
         self.json = {}
         STORAGE_FOLDER.mkdir(parents = True, exist_ok = True)
 
     def fetch_data(self):
+        """
+        Function to handle both downloading csv and generating json
+        :return: Void
+        """
+        self._download_csv()
+        self._generate_json(FEATURES)
+
+    def _download_csv(self):
+        """
+        Function to download and save csv file
+        :return: Void
+        """
         self.data = pd.read_csv(URL)
         self.data = self.data.loc[self.data['iso_code'].isin(COUNTRIES)]
         self.data.to_csv(STORAGE_FOLDER / 'covid.csv', index=False)
 
-    def generate_json(self, category_dict: dict):
+    def _generate_json(self, category_dict: dict):
+        """
+        Function to generate json from csv file
+        :param category_dict: Dictionary with categories as keys and features as values
+        :return: Void
+        """
         for category in category_dict:
             category_data = {}
             for country in self.data['iso_code'].unique():
@@ -140,41 +159,3 @@ class DataHandler:
 
         with open(STORAGE_FOLDER / 'covid.json', "w") as outfile:
             json.dump(self.json, outfile)
-
-
-
-
-# test = DataHandler()
-# test.fetch_data()
-# test.generate_json(FEATURES)
-
-
-
-
-# def fetch_data():
-#     cases_csv = pd.read_csv(URL)
-#     cases_csv.to_csv('storage_mock/data/cases_world.csv', index=False) 
-#     return cases_csv
-#     # cases_csv = cases_csv.loc[cases_csv['iso_code'].isin(COUNTRIES)]
-#     # cases_csv.to_csv('data/cases.csv', index=False) 
-
-# def generate_json(dataframe: pd.DataFrame, features: dict):
-#     meta_json = {}
-#     for category in features:
-#         category_data = {}
-#         for country in dataframe['iso_code'].unique():
-#             country_data = {}
-#             for _, row in dataframe[dataframe['iso_code'] == country].iterrows():
-#                 date_data = {}
-#                 for attribute in features[category]:
-#                     date_data[attribute] = row[attribute]
-#                 country_data[row["date"]] = date_data
-#             category_data[country] = country_data
-#         meta_json[category] = category_data
-#     return (meta_json)
-
-# if __name__ == '__main__':
-#     data = fetch_data()
-
-#     with open("test.json", "w") as outfile:
-#         json.dump(generate_json(fetch_data(), {"cases": ['new_cases', 'total_cases'], "deaths": ['new_deaths', 'total_deaths']}), outfile)
