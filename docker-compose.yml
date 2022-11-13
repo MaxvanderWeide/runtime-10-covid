@@ -6,7 +6,7 @@ services:
       context: .
       target: web_server
     ports:
-      - target: 80
+      - target: 4200
         published: 4200
         protocol: tcp
     volumes:
@@ -21,3 +21,11 @@ services:
       - target: 8080
         published: 8080
         protocol: tcp
+
+  cron:
+    build:
+      context: .
+      target: cronjob
+    entrypoint: [ "bash", "-c", "cron -f" ]
+    volumes:
+      - .:/srv/app
