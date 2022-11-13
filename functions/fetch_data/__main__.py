@@ -29,7 +29,7 @@ class Country(Enum):
 
 class LiveDataFetcher:
     """
-    Class for fetching data from covid19api.com
+    Class for live fetching data from covid19api.com and government repositories
     """
 
     def __init__(self):
@@ -117,6 +117,10 @@ class LiveDataFetcher:
 
 
 class DataFetcher:
+    """
+    Class for fetching data from ourworldindata.com
+    """
+
     def __init__(self):
         self.data = pd.DataFrame()
         self.json = {}
