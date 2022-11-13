@@ -2,11 +2,22 @@ version: "3.4"
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      target: web_server
     ports:
       - target: 80
-        published: 80
+        published: 4200
         protocol: tcp
     volumes:
       - "/app/node_modules"
       - ".:/app"
+
+  api:
+    build:
+      context: .
+      target: flask_api
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp

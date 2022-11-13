@@ -17,13 +17,13 @@ RUN npm run build
 
 FROM nginx:1.10.3-alpine
 COPY --from=web_server /usr/local/app/dist/runtime /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 4200
 
-FROM python:3
-COPY /storage_mock /storage_mock
-ENTRYPOINT ["python", "/storage_mock/storage_client.py"]
+#FROM python:3
+#COPY /storage_mock /storage_mock
+#ENTRYPOINT ["python", "/storage_mock/storage_client.py"]
 
-FROM python:3
+FROM python:3 AS flask_api
 COPY /back-end /back-end
 RUN pip install -r /back-end/api_server/requirements.txt
 ENV PYTHONPATH='/back-end/api_server'
