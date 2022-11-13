@@ -31,7 +31,7 @@ header {
         background: none;
         color: inherit;
         border: none;
-        padding: 4px 8px 4px 8px;
+        padding: 4px 4px 4px 4px;
         font: inherit;
         cursor: pointer;
         outline: inherit;
@@ -49,10 +49,10 @@ header {
         display: flex;
         margin-left: 8px;
         border-radius: 50%;
-        padding: 7px 7px 7px 7px;
+        padding: 7px 4px 7px 4px;
 
         svg {
-          fill: var(--text-primary-color);
+          color: var(--text-primary-color);
           width: 30px;
         }
 

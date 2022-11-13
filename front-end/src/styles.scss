@@ -26,8 +26,12 @@ $grid-breakpoints: (
 }
 
 body {
-  margin: 0;
   font-family: 'Poppins', serif;
   background-color: var(--background-primary-color);
+
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden
 }
 
