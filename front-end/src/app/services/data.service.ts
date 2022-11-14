@@ -42,4 +42,39 @@ export class DataService {
             );
     }
 
+    public getDeaths(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/deaths`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
+    public getVaccin(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/vaccinations`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
+    public getNewCases(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/new/cases`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
+    public getNewDeaths(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/new/deaths`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
+    public getNewVaccin(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/new/vaccinations`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
 }
