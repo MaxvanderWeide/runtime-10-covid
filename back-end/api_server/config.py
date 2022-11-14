@@ -1,0 +1,5 @@
+ORIGINS = [
+    "a^"
+]
+
+TOKEN = None
