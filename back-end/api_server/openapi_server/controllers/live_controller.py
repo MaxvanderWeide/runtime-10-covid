@@ -26,7 +26,6 @@ class LiveController:
         data = data.groupby('date')['cases'].sum()
         data = data.diff()
         cases = data.iloc[-1:][0]
-        print(date)
         return {'date': date, 'hours': int(hours), 'cases': int(cases)}
 
     def fetch_netherlands(self):
@@ -84,7 +83,6 @@ def get_live(country):
     if country == 'brazil':
         return make_response(jsonify(LiveController().fetch_brazil()), 200)
     if country == 'netherlands':
-        print(LiveController().fetch_netherlands())
         return make_response(jsonify(LiveController().fetch_netherlands()), 200)
     if country == 'spain':
         return make_response(jsonify(LiveController().fetch_spain()), 200)
