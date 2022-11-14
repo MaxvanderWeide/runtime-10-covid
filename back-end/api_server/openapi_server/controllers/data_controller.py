@@ -73,36 +73,6 @@ class DataController:
                 }
             )
         return response
-        # data = self.s_client.get_entity('covid')['data']['cases']
-        # lstmn = (datetime.datetime.today() - dateutil.relativedelta.relativedelta(months=3)).strftime('%Y-%m-%d')
-        # response = []
-        # for country in data:
-        #     series = []
-        #     for i in data[country]:
-        #         if i < lstmn:
-        #             continue
-        #         series.append(
-        #             {
-        #                 "name": i,
-        #                 "value": data[country][i]['new_cases'] or 0
-        #             }
-        #         )
-        #     for d in self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country]:
-        #         if d == 'parameters':
-        #             continue
-        #         series.append(
-        #             {
-        #                 "name": d,
-        #                 "value": self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country][d]['new_cases'] or 0
-        #             }
-        #         )
-        #     response.append(
-        #         {
-        #             "name": country,
-        #             "series": series
-        #         }
-        #     )
-        # return response
 
     def get_cases(self):
         return self.get_data('cases', 'total_cases')
