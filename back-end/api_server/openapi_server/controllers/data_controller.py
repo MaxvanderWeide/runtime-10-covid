@@ -43,7 +43,15 @@ class DataController:
                         "value": data[country][i]['new_cases'] or 0
                     }
                 )
-            series.append(self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country])
+            for d in self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country]:
+                if d == 'parameters':
+                    continue
+                series.append(
+                    {
+                        "name": d,
+                        "value": self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country][d]['new_cases'] or 0
+                    }
+                )
             response.append(
                 {
                     "name": country,
