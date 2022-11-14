@@ -1,6 +1,44 @@
 <div class="dashboard-content">
+    <button (click)="tog()">Toggle new/all</button>
     <div class="row">
         <div class="col">
+            <h2>New cases + prediction</h2>
+            <app-chartbox [highlighted]="true">
+                <ngx-charts-line-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="predictor">
+                </ngx-charts-line-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Cases</h2>
+            <app-chartbox>
+                <ngx-charts-line-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="toggle ? cases: cCases">
+                </ngx-charts-line-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Deaths</h2>
             <app-chartbox>
                 <ngx-charts-area-chart
                         [legend]="true"
@@ -10,7 +48,26 @@
                         [xAxis]="true"
                         [yAxis]="true"
                         [timeline]="true"
-                        [results]="multi">
+                        [autoScale]=true
+                        [results]="toggle ? deaths : cDeaths">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Vaccinations</h2>
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="toggle ? vaccin : cVaccin">
                 </ngx-charts-area-chart>
             </app-chartbox>
         </div>

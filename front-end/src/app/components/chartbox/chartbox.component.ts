@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-chartbox',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chartbox.component.scss']
 })
 export class ChartboxComponent implements OnInit {
+
+  @Input() highlighted = false;
 
   constructor() { }
 

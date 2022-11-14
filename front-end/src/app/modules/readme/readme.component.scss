@@ -1,0 +1,11 @@
+.readme-container {
+  height: 100%;
+  background-color: var(--text-background-primary-color);
+  padding: 5px 15px 0 15px;
+  color: var(--text-primary-color);
+  border-radius: 15px 15px 0 0;
+
+  a {
+    color: rgb(145, 85, 253);
+  }
+}

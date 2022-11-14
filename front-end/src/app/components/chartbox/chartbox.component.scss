@@ -1,7 +1,11 @@
 .box {
   border-radius: 25px;
-  background: #ffffff;
+  background: var(--background-secondary-color);
   padding: 25px;
   height: 100%;
   width: 100%;
+
+  &.high {
+    background: #eadbff;
+  }
 }

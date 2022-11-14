@@ -1,1 +1,42 @@
-<p>readme works!</p>
+<div class="readme-container">
+    <h1>Runtime dashboard</h1>
+
+    <p>
+        This dashboard presents COVID-19 information for policy makers.
+        While previous COVID-19 research has identified sets of factors such as average demographic age,
+        hot weather, Bacillus Calmette–Guérin (BCG) vaccine and malaria treatment,
+        these factors have been grouped and are hard to distinguish from each other.
+        This dashboard intends to focus on the comparison of policy trends in different climate conditions,
+        while including different demographic factors, to help policy makers understand the impact of policy interventions
+        through the application of the CRISP-DM method.
+    </p>
+
+    <h3>Data sources</h3>
+    <div>
+        The dashboard uses multiple data sources. <a href="https://ourworldindata.org/">OurWorldInData</a> is used as
+        time series data that is not dynamically fetched. This dashboard saves a local copy of the entire data every day.
+        This dataset is extensive, but does not include data on government interventions. Therefore, this dashboard uses Oxford's Government
+        Response Tracker datasets which are merged into one large time series set that is ready to use for descriptive
+        analysis in the dashboard and is used for the machine learning tasks. Live data on the recent amount of cases
+        and deaths is dynamically fetched from several sources, varying for each country.
+        The data sources per country are:
+        <ul>
+            <li><a href="https://raw.githubusercontent.com/thohan88/covid19-nor-data/master/data/01_infected/msis/municipality_and_district.csv">Norway</a> is fetched directly from the official government open data repositories.</li>
+            <li><a href="https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.csv">Netherlands</a> is fetched directly from the official government open data repositories.</li>
+            <li><a href="https://api.covid19api.com/dayone/country/spain">Spain</a> this live data is retrieved from a free-to-use API
+                via covid19api.com.</li>
+            <li><a href="https://api.covid19api.com/dayone/country/brazil">Brazil</a> this live data is retrieved from a free-to-use API
+                via covid19api.com.</li>
+        </ul>
+    </div>
+
+    <h3>Docker</h3>
+    <div>
+        The dashboard is created using Angular for its front-end, Flask for the API and a crontab that fetches data and
+        creates models. The front-end and API are hosted in docker containers. Docker Container is a standardized unit
+        which can be created on the fly to deploy a particular application or environment. This dashboard is separated
+        into three different docker containers build opun three different docker images. To find more information about
+        how the dashboard is hosted/run go to the dashboard <a href="https://github.com/MaxvanderWeide/runtime-10-covid">github</a>.
+    </div>
+</div>
+

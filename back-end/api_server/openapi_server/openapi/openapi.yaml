@@ -40,6 +40,21 @@ paths:
         openapi_server.controllers.status_controller
       security:
         - api_key: [ ]
+  /predictor:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving predictor
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get predictor
+      operationId: get_predictor
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
   /cases:
     get:
       responses:
@@ -59,7 +74,7 @@ paths:
     get:
       responses:
         "200":
-          description: Successfully receiving deatgs
+          description: Successfully receiving deaths
         "400":
           description: "Bad Request"
         "401":
@@ -111,6 +126,51 @@ paths:
           description: "Invalid Token"
       summary: Get vaccinations
       operationId: get_vaccinations
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /new/cases:
+      get:
+        responses:
+          "200":
+            description: Successfully receiving new cases
+          "400":
+            description: "Bad Request"
+          "401":
+            description: "Invalid Token"
+        summary: Get cases
+        operationId: get_cases_new
+        x-openapi-router-controller:
+          openapi_server.controllers.data_controller
+        security:
+          - api_key: [ ]
+  /new/deaths:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving new deaths
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get deaths
+      operationId: get_deaths_new
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /new/vaccinations:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving new vaccinations
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get vaccinations
+      operationId: get_vaccinations_new
       x-openapi-router-controller:
         openapi_server.controllers.data_controller
       security:
