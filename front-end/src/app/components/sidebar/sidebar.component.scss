@@ -1,0 +1,99 @@
+.sidebar {
+  position: relative;
+  width: 260px;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--text-primary-color);
+
+
+  &-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.125rem 0 1.5rem;
+    min-height: 64px;
+
+    a {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 35px;
+      }
+
+      h6 {
+        margin: 0 0 0 12px;
+        font-size: 1.25rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-list {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 8px 1.125rem 8px 0;
+    position: relative;
+
+    li.sidebar-list-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      margin-top: 0.375rem;
+      padding-left: 0;
+      padding-right: 0;
+
+
+      a {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        padding: 0 14px 0 22px;
+        height: 45px;
+        cursor: pointer;
+        border-radius: 0 100px 100px 0;
+        color: var(--text-primary-color);
+        text-decoration: none;
+
+        &:hover {
+          background-color: var(--hover-primary-color);
+        }
+
+        .left {
+          flex-shrink: 1;
+          display: inline-flex;
+          min-width: 0;
+          margin-right: 10px;
+        }
+
+        .right {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          p {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+
+      a.active {
+        color: #fff;
+        background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
+        box-shadow: 0 4px 8px -4px rgba(58, 53, 65, 0.42);
+      }
+    }
+  }
+}

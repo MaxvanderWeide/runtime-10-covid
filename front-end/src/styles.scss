@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i");
+@import "~src/assets/scss/colors";
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 540px,
+        md: 720px,
+        lg: 1200px,
+        xl: 1400px
+);
+
+@import '~bootstrap';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+
+.theme-light {
+  @each $name, $color in $config {
+    #{$name}: nth($color, 1)
+  }
+}
+.theme-dark {
+  @each $name, $color in $config {
+    #{$name}: nth($color, 2)
+  }
+}
+
+body {
+  font-family: 'Poppins', serif;
+  background-color: var(--background-primary-color);
+
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+

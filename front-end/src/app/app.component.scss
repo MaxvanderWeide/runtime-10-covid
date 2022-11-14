@@ -1,0 +1,31 @@
+.network {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  font-size: 15px;
+  z-index: 9999999;
+  text-align: center;
+  &-offline {
+    background: #ff5151;
+  }
+  &-online {
+    background: #14FFA3;
+  }
+}
+
+.page-content {
+  display: flex;
+
+  &-right-side {
+    width: -webkit-calc(100% - 260px);
+    width:    -moz-calc(100% - 260px);
+    width:         calc(100% - 260px);
+
+    .wrapper {
+      padding: 0 20px 0 10px;
+      height: 100%;
+    }
+  }
+}

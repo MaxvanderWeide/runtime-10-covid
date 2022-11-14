@@ -1,0 +1,8 @@
+# run the test script every minute and output whatever it echoes in a log file
+# using `>` instead of `>>` to append a new line at each cron iteration
+
+##### Cronjob is alive #####
+* * * * * /usr/local/bin/python /app/ping.py >> /app/cron_logger.log 2>&1
+
+##### Run fetch data #####
+0 1 * * * /usr/local/bin/python /app/functions/fetch_data >> /app/cron_logger.log 2>&1

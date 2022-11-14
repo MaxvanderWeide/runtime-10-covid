@@ -3,3 +3,7 @@ Flask==1.1.4
 Flask-Cors==3.0.10
 Flask-SSLify==0.1.5
 Flask-Testing==0.8.1
+markupsafe==2.0.1
+python-dateutil
+pandas
+requests

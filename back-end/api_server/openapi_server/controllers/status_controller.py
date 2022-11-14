@@ -10,4 +10,4 @@ class StatusController:
 
 
 def get_status() -> Response:
-    return make_response(jsonify(StatusController().get_active_moves()), 200)
+    return make_response(jsonify(StatusController().get_status()), 200)

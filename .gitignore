@@ -185,5 +185,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Config
-src/env.js
+back-end/storage_mock/data/*.json
+front-end/.angular

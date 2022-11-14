@@ -1,0 +1,88 @@
+<div class="dashboard-content">
+    <div class="row">
+        <div class="col" *ngFor="let country of live">
+            <h5>{{country.name}}</h5>
+            <p>{{country.updated}} | updated {{country.hours}} hours ago</p>
+            <p>Deaths: {{country.deaths}}</p>
+            <p>Cases: {{country.cases}}</p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <button (click)="tog()">Toggle new/all</button>
+    <div class="row">
+        <div class="col">
+            <h2>New cases + prediction</h2>
+            <app-chartbox [highlighted]="loading">
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['rgba(148,255,143,0.40)', 'rgba(255,181,69,0.40)', 'rgba(250,125,125,0.40)', 'rgba(250,248,124,0.40)', '#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="predictor">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Cases</h2>
+            <app-chartbox>
+                <ngx-charts-line-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="toggle ? cases: cCases">
+                </ngx-charts-line-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Deaths</h2>
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="toggle ? deaths : cDeaths">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Vaccinations</h2>
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="toggle ? vaccin : cVaccin">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+</div>
+
+

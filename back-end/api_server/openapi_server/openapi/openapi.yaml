@@ -5,6 +5,48 @@ info:
   version: "1.0"
   description: An API for the runtime environment
 paths:
+  /stores:
+    post:
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              type: object
+              additionalProperties: true
+        required: true
+      responses:
+        "201":
+          description: Successfully post new data stores
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Unauthorized"
+      summary: Post new data stores
+      operationId: post_stores
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+  /live/{country}:
+    get:
+      parameters:
+        - in: path
+          name: country
+          schema:
+            type: string
+          required: true
+          description: Country to get
+      responses:
+        "200":
+          description: Successfully receiving live data
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get live
+      operationId: get_live
+      x-openapi-router-controller:
+        openapi_server.controllers.live_controller
+      security:
+        - api_key: [ ]
   /status:
     get:
       responses:
@@ -12,7 +54,153 @@ paths:
           description: Successfully receiving status
         "400":
           description: "Bad Request"
+        "401":
+          description: "Invalid Token"
       summary: Get status
       operationId: get_status
       x-openapi-router-controller:
         openapi_server.controllers.status_controller
+      security:
+        - api_key: [ ]
+  /predictor:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving predictor
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get predictor
+      operationId: get_predictor
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /cases:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving cases
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get cases
+      operationId: get_cases
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /deaths:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving deaths
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get deaths
+      operationId: get_deaths
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /policies:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving policies
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get policies
+      operationId: get_policies
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /temperatures:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving temperatures
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get temperatures
+      operationId: get_temperatures
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /vaccinations:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving vaccinations
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get vaccinations
+      operationId: get_vaccinations
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /new/cases:
+      get:
+        responses:
+          "200":
+            description: Successfully receiving new cases
+          "400":
+            description: "Bad Request"
+          "401":
+            description: "Invalid Token"
+        summary: Get cases
+        operationId: get_cases_new
+        x-openapi-router-controller:
+          openapi_server.controllers.data_controller
+        security:
+          - api_key: [ ]
+  /new/deaths:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving new deaths
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get deaths
+      operationId: get_deaths_new
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+  /new/vaccinations:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving new vaccinations
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get vaccinations
+      operationId: get_vaccinations_new
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: X-Auth
+      in: header
+      x-apikeyInfoFunc: openapi_server.controllers.security_controller.apikey_auth

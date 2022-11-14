@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+
+  web:
+    build:
+      context: ./front-end/
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    volumes:
+      - "/app/node_modules"
+      - ".:/app"
+
+  api:
+    build:
+      context: ./back-end/
+      dockerfile: Dockerfile
+      target: flask_api
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+
+  cron:
+    build:
+      context: ./functions/
+      dockerfile: Dockerfile
+      target: cronjob
+    entrypoint: [ "bash", "-c", "cron -f" ]
+    volumes:
+      - .:/srv/app

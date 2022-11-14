@@ -1,0 +1,25 @@
+.box {
+  border-radius: 25px;
+  background: var(--background-secondary-color);
+  padding: 25px;
+  height: 100%;
+  width: 100%;
+
+  &.high {
+    animation-name: op;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes op {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
