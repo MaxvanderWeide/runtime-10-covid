@@ -13,10 +13,10 @@ class DataController:
         return make_response("Stores stored", 201)
 
     def get_cases(self):
-        return self.s_client.get_entity('cases')
+        return self.s_client.get_entity('covid')["data"]['cases']
 
     def get_deaths(self):
-        raise NotImplementedError
+        return self.s_client.get_entity('covid')["data"]['deaths']
 
     def get_policies(self):
         raise NotImplementedError
