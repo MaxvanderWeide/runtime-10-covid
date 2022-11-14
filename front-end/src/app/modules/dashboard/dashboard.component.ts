@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   public retData = false;
   public toggle = true;
 
+  public loading = true;
+
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class DashboardComponent implements OnInit {
     })
     this.dataService.getPredictor().subscribe(response => {
       this.predictor = response;
+      this.loading = false;
     })
   }
 

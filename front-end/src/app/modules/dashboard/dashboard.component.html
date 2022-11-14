@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col">
             <h2>New cases + prediction</h2>
-            <app-chartbox [highlighted]="true">
+            <app-chartbox [highlighted]="loading">
                 <ngx-charts-area-chart
                         [legend]="true"
                         [scheme]="{domain: ['rgba(148,255,143,0.40)', 'rgba(255,181,69,0.40)', 'rgba(250,125,125,0.40)', 'rgba(250,248,124,0.40)', '#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"

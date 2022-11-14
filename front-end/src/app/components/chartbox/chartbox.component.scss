@@ -6,6 +6,20 @@
   width: 100%;
 
   &.high {
-    background: rgba(222, 222, 222);
+    animation-name: op;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes op {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 1;
   }
 }
