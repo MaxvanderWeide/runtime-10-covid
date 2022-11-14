@@ -13,10 +13,45 @@ class DataController:
         return make_response("Stores stored", 201)
 
     def get_cases(self):
-        return self.s_client.get_entity('covid')["data"]['cases']
+        data = self.s_client.get_entity('covid')["data"]['cases']
+        response = []
+        for country in data:
+            series = []
+            for i in data[country]:
+                series.append(
+                    {
+                        "name": i,
+                        "value": data[country][i]["total_cases"] or 0
+                    }
+                )
+            response.append(
+                {
+                    "name": country,
+                    "series": series
+                }
+            )
+        return response
+
 
     def get_deaths(self):
-        return self.s_client.get_entity('covid')["data"]['deaths']
+        data = self.s_client.get_entity('covid')["data"]['deaths']
+        response = []
+        for country in data:
+            series = []
+            for i in data[country]:
+                series.append(
+                    {
+                        "name": i,
+                        "value": data[country][i]["total_deaths"] or 0
+                    }
+                )
+            response.append(
+                {
+                    "name": country,
+                    "series": series
+                }
+            )
+        return response
 
     def get_policies(self):
         raise NotImplementedError
@@ -25,7 +60,24 @@ class DataController:
         raise NotImplementedError
 
     def get_vaccinations(self):
-        raise NotImplementedError
+        data = self.s_client.get_entity('covid')["data"]['vaccinations']
+        response = []
+        for country in data:
+            series = []
+            for i in data[country]:
+                series.append(
+                    {
+                        "name": i,
+                        "value": data[country][i]["total_vaccinations"] or 0
+                    }
+                )
+            response.append(
+                {
+                    "name": country,
+                    "series": series
+                }
+            )
+        return response
 
 
 def post_stores(body) -> Response:

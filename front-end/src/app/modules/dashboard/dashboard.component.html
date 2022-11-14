@@ -10,7 +10,39 @@
                         [xAxis]="true"
                         [yAxis]="true"
                         [timeline]="true"
-                        [results]="multi">
+                        [results]="cases">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [results]="deaths">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [results]="vaccin">
                 </ngx-charts-area-chart>
             </app-chartbox>
         </div>

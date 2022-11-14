@@ -8,14 +8,21 @@ import {DataService} from "../../services/data.service";
 })
 export class DashboardComponent implements OnInit {
 
-  public multi = [];
+  public cases = [];
+  public deaths = [];
+  public vaccin = [];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.dataService.getCases().subscribe(response => {
-      this.multi = response;
-      console.log(this.multi);
+      this.cases = response;
+    })
+    this.dataService.getDeaths().subscribe(response => {
+      this.deaths = response;
+    })
+    this.dataService.getVaccin().subscribe(response => {
+      this.vaccin = response;
     })
   }
 
