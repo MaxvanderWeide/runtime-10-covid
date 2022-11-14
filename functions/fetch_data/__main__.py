@@ -9,6 +9,9 @@ from dateutil.parser import parse
 import numpy as np
 from skforecast.ForecasterAutoreg import ForecasterAutoreg
 from sklearn.ensemble import RandomForestRegressor
+from skforecast.model_selection import grid_search_forecaster
+from sklearn.metrics import mean_squared_error
+
  
 COUNTRIES = ["NLD", "BRA", "NOR", "ESP"]
 ROOT = Path().parent.absolute()
@@ -293,6 +296,25 @@ class Forecaster:
                     regressor = RandomForestRegressor(random_state=123),
                     lags      = 12
                 )
+
+            lags_grid = [3, 10, [1, 5, 20, 50, 100, 150]]
+            param_grid = {'n_estimators': [50, 100],
+                        'max_depth': [5, 10, 15]}
+
+            results_grid = grid_search_forecaster(
+                                    forecaster  = forecaster,
+                                    y           = self.data.loc[self.data['iso_code'] == country]['new_cases'],
+                                    param_grid  = param_grid,
+                                    lags_grid   = lags_grid,
+                                    steps       = steps,
+                                    refit       = True,
+                                    metric      = 'mean_squared_error',
+                                    initial_train_size = len(self.data.loc[self.data['iso_code'] == country]['new_cases']),
+                                    return_best = True,
+                                    verbose     = False
+                        )
+
+            print(results_grid)
 
             forecaster.fit(y = self.data.loc[self.data['iso_code'] == country]['new_cases'])
             
