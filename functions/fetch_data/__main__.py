@@ -146,10 +146,18 @@ class DataFetcher:
         self._download_GRT_csv('policy_workplace_closing', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c2m_workplace_closing.csv')
         self._download_GRT_csv('policy_travel_restriction', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c8ev_internationaltravel.csv')
         
-        self.interpolate('new_cases')
+        self.first_values_zero()
+
+        for var in ['new_cases', 'total_cases', 'new_deaths', 'total_deaths']:
+            self.interpolate(var)
+
+        for var in ['policy_facial_covering', 'policy_school_closing', 'policy_public_transport', 'policy_gatherings_restriction', 'policy_workplace_closing', 'policy_travel_restriction']:
+            self.fill_last_value(var)
         
         self._save_csv()
         self._generate_json(FEATURES)
+
+        print(self.data.isnull().sum())
 
     def _download_OWID_csv(self, url: str):
         """
@@ -181,6 +189,17 @@ class DataFetcher:
         for index, row in self.data.iterrows():
             self.data.at[index, column] = temporal_data.loc[temporal_data['date'] == row['date']][row['iso_code']][0]
 
+    def first_values_zero(self):
+        """
+        Function to fill the first values of the features with 0
+        :return: Void
+        """
+        
+        for index, row in self.data.iterrows():
+            print(self.data.loc[index])
+
+                
+
     def interpolate(self, feature: str):
         """
         Function to interpolate the data
@@ -191,6 +210,25 @@ class DataFetcher:
         .groupby('iso_code')[feature]
         .transform(lambda s: s[::-1].interpolate(limit=1).bfill())
         )
+
+    def fill_last_value(self, feature: str):
+        """
+        Function to fill last value in later variables
+        :return: Void
+        """
+
+        for country in COUNTRIES:
+            last_value = self.data.loc[(self.data['iso_code'] == country)]
+            date = last_value.loc[(self.data[feature].isnull() == False)]['date'].max()
+            value = last_value.loc[(self.data['date'] == date)][feature]
+
+            for index, row in self.data[self.data['iso_code'] == country].iterrows():
+                self.data.at[index, feature] = value
+
+    def fill_previous_value(self, feature: str):
+        for index, row in self.data.iterrows():
+            self.data.at[index, feature]
+
 
     def _save_csv(self):
         """
@@ -207,8 +245,6 @@ class DataFetcher:
         :return: Void
         """
         pd.set_option('display.max_rows', None, 'display.max_columns', None)
-
-        print(self.data.isnull().sum())
 
         self.real_data = {}
         for category in category_dict:
@@ -295,7 +331,7 @@ class Forecaster:
                     lags      = 12
                 )
 
-            lags_grid = [90, 180, 360, 720]
+            lags_grid = [90, 180, 360]
             param_grid = {'n_estimators': [50],
                         'max_depth': [5]}
 
@@ -346,4 +382,4 @@ class Forecaster:
 
 
 test2 = DataFetcher().fetch_data()
-test = Forecaster().forecast()
+# test = Forecaster().forecast()
