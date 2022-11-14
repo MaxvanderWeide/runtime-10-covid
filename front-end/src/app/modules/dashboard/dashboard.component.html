@@ -4,9 +4,9 @@
         <div class="col">
             <h2>New cases + prediction</h2>
             <app-chartbox [highlighted]="true">
-                <ngx-charts-line-chart
+                <ngx-charts-area-chart
                         [legend]="true"
-                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [scheme]="{domain: ['rgba(148,255,143,0.45)', 'rgba(255,181,69,0.45)', 'rgba(250,125,125,0.45)', 'rgba(250,248,124,0.45)', '#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
                         [showXAxisLabel]="true"
                         [showYAxisLabel]="true"
                         [xAxis]="true"
@@ -14,7 +14,7 @@
                         [timeline]="true"
                         [autoScale]=true
                         [results]="predictor">
-                </ngx-charts-line-chart>
+                </ngx-charts-area-chart>
             </app-chartbox>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <app-chartbox>
                 <ngx-charts-line-chart
                         [legend]="true"
-                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
                         [showXAxisLabel]="true"
                         [showYAxisLabel]="true"
                         [xAxis]="true"
@@ -42,7 +42,7 @@
             <app-chartbox>
                 <ngx-charts-area-chart
                         [legend]="true"
-                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
                         [showXAxisLabel]="true"
                         [showYAxisLabel]="true"
                         [xAxis]="true"
@@ -60,7 +60,7 @@
             <app-chartbox>
                 <ngx-charts-area-chart
                         [legend]="true"
-                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [scheme]="{domain: ['#94ff8f', '#FFB545FF', '#fa7d7d', '#faf87c']}"
                         [showXAxisLabel]="true"
                         [showYAxisLabel]="true"
                         [xAxis]="true"
