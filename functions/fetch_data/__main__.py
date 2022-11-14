@@ -147,8 +147,9 @@ class DataFetcher:
         self._download_GRT_csv('policy_travel_restriction', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c8ev_internationaltravel.csv')
         
         self.first_values_zero()
+        self.fill_previous_value()
 
-        for var in ['new_cases', 'total_cases', 'new_deaths', 'total_deaths']:
+        for var in ['new_cases', 'total_cases', 'new_deaths', 'total_deaths', 'new_vaccinations', 'total_vaccinations']:
             self.interpolate(var)
 
         for var in ['policy_facial_covering', 'policy_school_closing', 'policy_public_transport', 'policy_gatherings_restriction', 'policy_workplace_closing', 'policy_travel_restriction']:
@@ -194,10 +195,11 @@ class DataFetcher:
         Function to fill the first values of the features with 0
         :return: Void
         """
-        
-        for index, row in self.data.iterrows():
-            print(self.data.loc[index])
-
+        for country in COUNTRIES:
+            first_row = self.data.loc[(self.data['iso_code'] == country)].iloc[[0]]
+            for column in first_row:
+                if pd.isnull(first_row[column].values[0]):
+                    self.data.loc[first_row.index, column] = 0
                 
 
     def interpolate(self, feature: str):
@@ -225,9 +227,12 @@ class DataFetcher:
             for index, row in self.data[self.data['iso_code'] == country].iterrows():
                 self.data.at[index, feature] = value
 
-    def fill_previous_value(self, feature: str):
-        for index, row in self.data.iterrows():
-            self.data.at[index, feature]
+    def fill_previous_value(self):
+        
+        for index in range(len(self.data)):
+            for column in self.data.iloc[[index]]:
+                if pd.isnull(self.data.iloc[[index]][column].values[0]):
+                    self.data.loc[self.data.iloc[[index]].index, column] = self.data.iloc[[index-1]][column].values[0]
 
 
     def _save_csv(self):
@@ -295,8 +300,8 @@ class StatusReporter:
 
 #StatusReporter.report("Model predictions could not be created", "Due to an error, no new model predictions could be made. Note that the shown data is not up-to-date and data and models are shown from 2022-11-13. Check dashboard later for new data.", StatusReporter.Code.SUCCESS)
 
-#test = DataFetcher().fetch_data()
-
+# test = LiveDataFetcher().fetch_country(Country.NORWAY)
+# print(test)
 
 class Forecaster:
     def __init__(self):
