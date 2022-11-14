@@ -1,4 +1,12 @@
 <div class="dashboard-content">
+    <div class="row">
+        <div class="col" *ngFor="let country of live">
+            <h5>{{country.name}}</h5>
+            <p>{{country.updated}}</p>
+            <p>Deaths: {{country.deaths}}</p>
+            <p>Cases: {{country.cases}}</p>
+        </div>
+    </div>
     <button (click)="tog()">Toggle new/all</button>
     <div class="row">
         <div class="col">

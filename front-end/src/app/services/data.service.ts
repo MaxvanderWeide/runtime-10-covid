@@ -70,6 +70,13 @@ export class DataService {
             );
     }
 
+    public getLive(country): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/live/${country}`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
     public getNewDeaths(): Observable<any> {
         return this.http.get(`${this.env.apiUrl}/new/deaths`)
             .pipe(
