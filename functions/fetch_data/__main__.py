@@ -276,6 +276,7 @@ class Forecaster:
             file_data["forecast"] = cases
             file.seek(0)
             json.dump(file_data, file, indent = 4)
+            requests.post("http://localhost:8080/stores", file_data)
 
         print(cases)
 
