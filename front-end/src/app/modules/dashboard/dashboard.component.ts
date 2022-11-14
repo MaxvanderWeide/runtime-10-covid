@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
                     name: 'netherlands',
                     cases: response.cases,
                     updated: response.date,
+                    hours: response.hours,
                     deaths: response.deaths
                 }
             );
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
                     name: 'brazil',
                     cases: response.cases,
                     updated: response.date,
+                    hours: response.hours,
                     deaths: response.deaths
                 }
             );
@@ -55,6 +57,7 @@ export class DashboardComponent implements OnInit {
                     name: 'spain',
                     cases: response.cases,
                     updated: response.date,
+                    hours: response.hours,
                     deaths: response.deaths
                 }
             );
@@ -65,6 +68,7 @@ export class DashboardComponent implements OnInit {
                     name: 'norway',
                     cases: response.cases,
                     updated: response.date,
+                    hours: response.hours,
                     deaths: "No measurement"
                 }
             );
