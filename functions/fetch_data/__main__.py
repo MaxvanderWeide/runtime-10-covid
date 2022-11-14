@@ -11,6 +11,8 @@ from skforecast.ForecasterAutoreg import ForecasterAutoreg
 from sklearn.ensemble import RandomForestRegressor
 from skforecast.model_selection import grid_search_forecaster
 from sklearn.metrics import mean_squared_error
+import warnings
+warnings.filterwarnings("ignore")
 
  
 COUNTRIES = ["NLD", "BRA", "NOR", "ESP"]
@@ -280,14 +282,9 @@ class Forecaster:
         print(cases)
 
     def _forecast_model(self, predicted_feature: str = 'new_cases'):
-        steps = 5
+        steps = 90
 
         regressor = {}
-        regressor['parameters'] = {
-            'features': [], 
-            'random_state': 123,
-            'lags': 12
-            }
 
         for country in self.data['iso_code'].unique():
             country_data = {}
@@ -297,9 +294,11 @@ class Forecaster:
                     lags      = 12
                 )
 
-            lags_grid = [3, 10, [1, 5, 20, 50, 100, 150]]
-            param_grid = {'n_estimators': [50, 100],
-                        'max_depth': [5, 10, 15]}
+            lags_grid = [90, 180, 360, 720]
+            param_grid = {'n_estimators': [50],
+                        'max_depth': [5]}
+
+            print(type(self.data.loc[self.data['iso_code'] == country]['new_cases'].values))
 
             results_grid = grid_search_forecaster(
                                     forecaster  = forecaster,
@@ -307,16 +306,20 @@ class Forecaster:
                                     param_grid  = param_grid,
                                     lags_grid   = lags_grid,
                                     steps       = steps,
-                                    refit       = True,
+                                    refit       = False,
                                     metric      = 'mean_squared_error',
-                                    initial_train_size = len(self.data.loc[self.data['iso_code'] == country]['new_cases']),
+                                    initial_train_size = int(0.5 * len(self.data.loc[self.data['iso_code'] == country]['new_cases'])),
                                     return_best = True,
                                     verbose     = False
                         )
 
-            print(results_grid)
-
             forecaster.fit(y = self.data.loc[self.data['iso_code'] == country]['new_cases'])
+
+            country_data['parameters'] = {
+            'features': [], 
+            'hyperparameters': results_grid['params'].iloc[0],
+            'lags': results_grid['lags'].iloc[0].tolist()
+            }
             
             predictions = forecaster.predict(steps=steps)
             predictions = predictions.to_frame()
@@ -341,5 +344,5 @@ class Forecaster:
 
 
 
-
+test2 = DataFetcher().fetch_data()
 test = Forecaster().forecast()
