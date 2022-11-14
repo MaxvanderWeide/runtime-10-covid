@@ -10,7 +10,6 @@ Made by ***Max van der Weide**, **Milo Voorhout**, **Björn Koemans*** and ***Sa
 
 * [Why Docker](#why-docker)
 * [Prerequisites](#prerequisites)
-* [Installation](#installation)
 * [Containers & Images](#containers)
 * [Run Dashboard](#run-dashboard)
 
