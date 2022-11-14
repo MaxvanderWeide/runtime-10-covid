@@ -6,7 +6,6 @@ from connexion.utils import is_null
 from flask_cors import CORS
 from jsonschema import ValidationError
 
-import config
 
 
 class RequestBodyValidator(decorators.validation.RequestBodyValidator):
@@ -37,7 +36,7 @@ app.add_api(
     strict_validation=True
 )
 
-CORS(app.app, origins=config.ORIGINS, support_credentials=True)
+CORS(app.app, origins=["http://localhost:4200"], support_credentials=True)
 
 @app.app.after_request
 def add_header(response):
