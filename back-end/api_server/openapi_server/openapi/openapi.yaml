@@ -25,6 +25,28 @@ paths:
       operationId: post_stores
       x-openapi-router-controller:
         openapi_server.controllers.data_controller
+  /live/{country}:
+    get:
+      parameters:
+        - in: path
+          name: country
+          schema:
+            type: string
+          required: true
+          description: Country to get
+      responses:
+        "200":
+          description: Successfully receiving live data
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get live
+      operationId: get_live
+      x-openapi-router-controller:
+        openapi_server.controllers.live_controller
+      security:
+        - api_key: [ ]
   /status:
     get:
       responses:
