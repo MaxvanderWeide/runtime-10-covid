@@ -40,6 +40,21 @@ paths:
         openapi_server.controllers.status_controller
       security:
         - api_key: [ ]
+  /predictor:
+    get:
+      responses:
+        "200":
+          description: Successfully receiving predictor
+        "400":
+          description: "Bad Request"
+        "401":
+          description: "Invalid Token"
+      summary: Get predictor
+      operationId: get_predictor
+      x-openapi-router-controller:
+        openapi_server.controllers.data_controller
+      security:
+        - api_key: [ ]
   /cases:
     get:
       responses:

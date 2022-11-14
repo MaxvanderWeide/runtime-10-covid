@@ -2,6 +2,24 @@
     <button (click)="tog()">Toggle new/all</button>
     <div class="row">
         <div class="col">
+            <h2>Predicted</h2>
+            <app-chartbox>
+                <ngx-charts-area-chart
+                        [legend]="true"
+                        [scheme]="{domain: ['#8470f8', 'rgba(92,255,220,0.66)', '#d077ee', '#e3b37a']}"
+                        [showXAxisLabel]="true"
+                        [showYAxisLabel]="true"
+                        [xAxis]="true"
+                        [yAxis]="true"
+                        [timeline]="true"
+                        [autoScale]=true
+                        [results]="predictor">
+                </ngx-charts-area-chart>
+            </app-chartbox>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <h2>Cases</h2>
             <app-chartbox>
                 <ngx-charts-area-chart

@@ -56,6 +56,13 @@ export class DataService {
             );
     }
 
+    public getPredictor(): Observable<any> {
+        return this.http.get(`${this.env.apiUrl}/predictor`)
+            .pipe(
+                catchError(DataService.handleError)
+            );
+    }
+
     public getNewCases(): Observable<any> {
         return this.http.get(`${this.env.apiUrl}/new/cases`)
             .pipe(

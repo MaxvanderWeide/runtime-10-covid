@@ -11,8 +11,8 @@ class DataController:
         self.s_client.append_entity("covid", body)
         return make_response("Stores stored", 201)
 
-    def get_data(self, entity, value):
-        data = self.s_client.get_entity('covid')["data"][entity]
+    def get_data(self, entity, value, v='data'):
+        data = self.s_client.get_entity('covid')[v][entity]
         response = []
         for country in data:
             series = []
@@ -23,6 +23,27 @@ class DataController:
                         "value": data[country][i][value] or 0
                     }
                 )
+            response.append(
+                {
+                    "name": country,
+                    "series": series
+                }
+            )
+        return response
+
+    def get_predictor(self):
+        data = self.s_client.get_entity('covid')['data']['cases']
+        response = []
+        for country in data:
+            series = []
+            for i in data[country]:
+                series.append(
+                    {
+                        "name": i,
+                        "value": data[country][i]['new_cases'] or 0
+                    }
+                )
+            series.append(self.s_client.get_entity('covid')['forecast']['cases']['RFR_new_cases_A'][country])
             response.append(
                 {
                     "name": country,
@@ -62,6 +83,10 @@ def post_stores(body) -> Response:
 
 def get_cases() -> Response:
     return make_response(jsonify(DataController().get_cases()), 200)
+
+
+def get_predictor() -> Response:
+    return make_response(jsonify(DataController().get_predictor()), 200)
 
 
 def get_deaths() -> Response:

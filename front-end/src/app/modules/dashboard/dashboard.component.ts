@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
   public cases = [];
   public deaths = [];
   public vaccin = [];
+  public predictor = [];
 
 
   public cCases = [];
@@ -31,6 +32,9 @@ export class DashboardComponent implements OnInit {
     })
     this.dataService.getVaccin().subscribe(response => {
       this.vaccin = response;
+    })
+    this.dataService.getPredictor().subscribe(response => {
+      this.predictor = response;
     })
   }
 
