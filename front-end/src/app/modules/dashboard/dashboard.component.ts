@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
                     name: 'norway',
                     cases: response.cases,
                     updated: response.date,
-                    deaths: response.deaths
+                    deaths: "No measurement"
                 }
             );
         });
