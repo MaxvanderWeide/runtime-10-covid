@@ -12,6 +12,14 @@ export class DashboardComponent implements OnInit {
   public deaths = [];
   public vaccin = [];
 
+
+  public cCases = [];
+  public cDeaths = [];
+  public cVaccin = [];
+
+  public retData = false;
+  public toggle = true;
+
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -24,6 +32,22 @@ export class DashboardComponent implements OnInit {
     this.dataService.getVaccin().subscribe(response => {
       this.vaccin = response;
     })
+  }
+
+  tog() {
+    this.toggle = !this.toggle
+    if (!this.retData) {
+      this.retData = true;
+      this.dataService.getNewCases().subscribe(response => {
+        this.cCases = response;
+      })
+      this.dataService.getNewDeaths().subscribe(response => {
+        this.cDeaths = response;
+      })
+      this.dataService.getNewVaccin().subscribe(response => {
+        this.cVaccin = response;
+      })
+    }
   }
 
 }

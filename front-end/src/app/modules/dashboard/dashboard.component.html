@@ -1,4 +1,5 @@
 <div class="dashboard-content">
+    <button (click)="tog()">Toggle new/all</button>
     <div class="row">
         <div class="col">
             <h2>Cases</h2>
@@ -11,7 +12,8 @@
                         [xAxis]="true"
                         [yAxis]="true"
                         [timeline]="true"
-                        [results]="cases">
+                        [autoScale]=true
+                        [results]="toggle ? cases: cCases">
                 </ngx-charts-area-chart>
             </app-chartbox>
         </div>
@@ -28,7 +30,8 @@
                         [xAxis]="true"
                         [yAxis]="true"
                         [timeline]="true"
-                        [results]="deaths">
+                        [autoScale]=true
+                        [results]="toggle ? deaths : cDeaths">
                 </ngx-charts-area-chart>
             </app-chartbox>
         </div>
@@ -45,7 +48,8 @@
                         [xAxis]="true"
                         [yAxis]="true"
                         [timeline]="true"
-                        [results]="vaccin">
+                        [autoScale]=true
+                        [results]="toggle ? vaccin : cVaccin">
                 </ngx-charts-area-chart>
             </app-chartbox>
         </div>
