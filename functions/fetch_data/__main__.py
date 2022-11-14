@@ -3,9 +3,12 @@ import pandas as pd
 import json
 from pathlib import Path
 from enum import Enum
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 from dateutil.parser import parse
+import numpy as np
+from skforecast.ForecasterAutoreg import ForecasterAutoreg
+from sklearn.ensemble import RandomForestRegressor
  
 COUNTRIES = ["NLD", "BRA", "NOR", "ESP"]
 ROOT = Path().parent.absolute()
@@ -127,7 +130,7 @@ class DataFetcher:
 
     def fetch_data(self):
         """
-        Function to handle both downloading csv and generating json
+        Function to handle both downloading csv and generating json from multiple sources
         :return: Void
         """
         self._download_OWID_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
@@ -137,6 +140,9 @@ class DataFetcher:
         self._download_GRT_csv('policy_gatherings_restriction', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c4m_restrictions_on_gatherings.csv')
         self._download_GRT_csv('policy_workplace_closing', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c2m_workplace_closing.csv')
         self._download_GRT_csv('policy_travel_restriction', 'https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/c8ev_internationaltravel.csv')
+        
+        self.interpolate('new_cases')
+        
         self._save_csv()
         self._generate_json(FEATURES)
 
@@ -149,6 +155,12 @@ class DataFetcher:
         self.data = self.data.loc[self.data['iso_code'].isin(COUNTRIES)]
 
     def _download_GRT_csv(self, column: str, url: str):
+        """
+        Function to download the policy features from Government Response Tracker (https://www.bsg.ox.ac.uk/research/covid-19-government-response-tracker)
+        :param: column: Column name to save the data to
+        :param: url: URL to download the data from
+        :return: Void
+        """
         temporal_data = pd.read_csv(url)
         temporal_data = temporal_data.loc[temporal_data['country_code'].isin(COUNTRIES)]
         temporal_data = temporal_data.T
@@ -163,9 +175,24 @@ class DataFetcher:
 
         for index, row in self.data.iterrows():
             self.data.at[index, column] = temporal_data.loc[temporal_data['date'] == row['date']][row['iso_code']][0]
-        self.data.to_csv(STORAGE_FOLDER / 'covid.csv', index=False)
+
+    def interpolate(self, feature: str):
+        """
+        Function to interpolate the data
+        :return: Void
+        """
+        self.data[feature] = (self.data
+        .assign(asset=self.data[feature].replace(0, float('nan')))
+        .groupby('iso_code')[feature]
+        .transform(lambda s: s[::-1].interpolate(limit=1).bfill())
+        )
 
     def _save_csv(self):
+        """
+        Function to save the csv file
+        :return: Void
+        """
+
         self.data.to_csv(STORAGE_FOLDER / 'covid.csv', index=False)
 
     def _generate_json(self, category_dict: dict):
@@ -174,6 +201,10 @@ class DataFetcher:
         :param category_dict: Dictionary with categories as keys and features as values
         :return: Void
         """
+        pd.set_option('display.max_rows', None, 'display.max_columns', None)
+
+        print(self.data.isnull().sum())
+
         self.real_data = {}
         for category in category_dict:
             category_data = {}
@@ -182,14 +213,111 @@ class DataFetcher:
                 for _, row in self.data[self.data['iso_code'] == country].iterrows():
                     date_data = {}
                     for attribute in category_dict[category]:
-                        date_data[attribute] = row[attribute]
+                        if pd.isnull(row[attribute]):
+                            date_data[attribute] = None
+                        else:
+                            date_data[attribute] = row[attribute]
                     country_data[row["date"]] = date_data
                 category_data[country] = country_data
             self.real_data[category] = category_data
         self.json['data'] = self.real_data
+        self.json['forecast'] = {}
 
         with open(STORAGE_FOLDER / 'covid.json', "w") as outfile:
-            json.dump(self.json, outfile)
+            json.dump(self.json, outfile, allow_nan=True)
 
 
-test = DataFetcher().fetch_data()
+class StatusReporter:
+
+    class Code(Enum):
+        ERROR = 1
+        SUCCESS = 2
+        WARNING = 3
+
+    @staticmethod
+    def setup_file():
+        if not Path.exists(STORAGE_FOLDER / 'status.json'):
+            with open(STORAGE_FOLDER / 'status.json', mode='w', encoding='utf-8') as f:
+                json.dump({'status_updates': []}, f)
+
+    @staticmethod
+    def report(title: str, message: str, code: Code):
+        StatusReporter.setup_file()
+
+        with open(STORAGE_FOLDER / 'status.json','r+') as file:
+            file_data = json.load(file)
+            file_data["status_updates"].append({'date': str(datetime.now()),'title': title, 'message': message, 'code': code.value})
+            file.seek(0)
+            json.dump(file_data, file, indent = 4)
+
+    
+
+#StatusReporter.report("Model predictions could not be created", "Due to an error, no new model predictions could be made. Note that the shown data is not up-to-date and data and models are shown from 2022-11-13. Check dashboard later for new data.", StatusReporter.Code.SUCCESS)
+
+#test = DataFetcher().fetch_data()
+
+
+class Forecaster:
+    def __init__(self):
+        self.data = pd.read_csv(STORAGE_FOLDER / 'covid.csv')
+
+    def forecast(self):
+        regressors = {}
+        regressors['RFR_new_cases_A'] = self._forecast_model()
+        regressors['RFR_new_cases_B'] = self._forecast_model()
+
+        cases = {'cases': regressors}
+
+        with open(STORAGE_FOLDER / 'covid.json','r+') as file:
+            file_data = json.load(file)
+            file_data["forecast"] = cases
+            file.seek(0)
+            json.dump(file_data, file, indent = 4)
+
+        print(cases)
+
+    def _forecast_model(self, predicted_feature: str = 'new_cases'):
+        steps = 5
+
+        regressor = {}
+        regressor['parameters'] = {
+            'features': [], 
+            'random_state': 123,
+            'lags': 12
+            }
+
+        for country in self.data['iso_code'].unique():
+            country_data = {}
+
+            forecaster = ForecasterAutoreg(
+                    regressor = RandomForestRegressor(random_state=123),
+                    lags      = 12
+                )
+
+            forecaster.fit(y = self.data.loc[self.data['iso_code'] == country]['new_cases'])
+            
+            predictions = forecaster.predict(steps=steps)
+            predictions = predictions.to_frame()
+
+            self.data['date'] = pd.to_datetime(self.data['date'])
+            start_date = self.data.loc[self.data['iso_code'] == 'BRA']['date'].max()
+            forecast_dates = pd.date_range(start_date+timedelta(days=1), start_date+timedelta(days=steps), freq='d')
+
+            predictions.index = forecast_dates
+            predictions['date'] = predictions.index
+
+            for _, row in predictions.iterrows():
+                date_data = {}
+                date_data[predicted_feature] = row['pred']
+                country_data[str(row["date"].date())] = date_data
+        
+            regressor[country] = country_data
+
+        return regressor
+        
+
+
+
+
+
+test = Forecaster().forecast()
