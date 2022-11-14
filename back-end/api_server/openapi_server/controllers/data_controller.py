@@ -1,6 +1,6 @@
 from flask import make_response, jsonify, Response
 
-from storage_mock.storage_client import get_client
+# from storage_mock.storage_client import get_client
 
 
 class DataController:

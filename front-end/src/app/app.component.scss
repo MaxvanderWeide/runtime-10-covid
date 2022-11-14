@@ -19,6 +19,12 @@
   display: flex;
 
   &-right-side {
-    width: 100%;
+    width: -webkit-calc(100% - 260px);
+    width:    -moz-calc(100% - 260px);
+    width:         calc(100% - 260px);
+
+    .wrapper {
+      padding: 0 20px 0 10px;
+    }
   }
 }
