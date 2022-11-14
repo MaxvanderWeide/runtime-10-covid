@@ -1,3 +1,6 @@
+import datetime
+import dateutil.relativedelta
+
 from flask import make_response, jsonify, Response
 
 from storage_mock.storage_client import get_client
@@ -33,10 +36,13 @@ class DataController:
 
     def get_predictor(self):
         data = self.s_client.get_entity('covid')['data']['cases']
+        lstmn = (datetime.datetime.today() - dateutil.relativedelta.relativedelta(months=3)).strftime('%Y-%m-%d')
         response = []
         for country in data:
             series = []
             for i in data[country]:
+                if i < lstmn:
+                    continue
                 series.append(
                     {
                         "name": i,
