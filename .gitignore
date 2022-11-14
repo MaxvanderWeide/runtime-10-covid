@@ -188,7 +188,6 @@ Thumbs.db
 # Config
 src/env.js
 
-back-end/api_server/config.py
-storage_mock/data
+back-end/storage_mock/data/*.json
 front-end/src/env.js
 front-end/.angular
