@@ -7,11 +7,16 @@ class DataController:
     def __init__(self):
         self.s_client = get_client()
 
+
+    def post_stores(self, body):
+        self.s_client.append_entity("covid", body)
+        return make_response("Stores stored", 201)
+
     def get_cases(self):
-        return self.s_client.get_entity('cases')
+        return self.s_client.get_entity('covid')["data"]['cases']
 
     def get_deaths(self):
-        raise NotImplementedError
+        return self.s_client.get_entity('covid')["data"]['deaths']
 
     def get_policies(self):
         raise NotImplementedError
@@ -21,6 +26,10 @@ class DataController:
 
     def get_vaccinations(self):
         raise NotImplementedError
+
+
+def post_stores(body) -> Response:
+    return DataController().post_stores(body)
 
 
 def get_cases() -> Response:

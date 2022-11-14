@@ -16,6 +16,16 @@ class StorageClient:
             data = json.load(f)
         return data
 
+    def append_entity(self, entity, entity_body):
+        pre_data = self.get_entity(entity)
+
+        for key in pre_data["data"]:
+            for country in pre_data["data"][key]:
+                pre_data["data"][key][country].append(entity_body["data"][key][country])
+        
+        with open(f'{os.path.dirname(__file__)}/data/{entity}.json', 'w') as f:
+            f.write(pre_data)
+        return self
 
 __client = None
 
